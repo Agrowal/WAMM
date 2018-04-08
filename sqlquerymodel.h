@@ -11,6 +11,7 @@ public:
     explicit SqlQueryModel(QObject *parent = 0);
 
     void setQuery(const QString &query, const QSqlDatabase &db = QSqlDatabase());
+    void setQuery(const QString &query, const QSqlDatabase *db);
     void setQuery(const QSqlQuery &query);
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const {	return m_roleNames;	}

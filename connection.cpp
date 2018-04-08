@@ -17,33 +17,37 @@ Connection* Connection::getConnection()
 Connection::Connection()
 {
     m_db = QSqlDatabase::addDatabase("QODBC");
-    m_db.setHostName("192.168.1.243:1521/TEST");
-    m_db.setDatabaseName("Flowair test");
-    m_db.setUserName("GMICKOWSKI");
-    m_db.setPassword("GMi2016!");
-    m_db.setPort(1521);
-    m_db.open();
-
 }
 
-User Connection::getUser() const
+QString Connection::connectionString()
 {
-    return m_user;
+    return m_hostIP+":"+QString::number(m_port)+"/"+m_hostName;
 }
 
-User *Connection::getUser()
+QSqlDatabase* Connection::db()
 {
-    return &m_user;
+    return &m_db;
 }
 
-void Connection::setUser(const User &user)
+bool Connection::login(QString hostIP, int port, QString hostName, QString databaseName, QString userName, QString password)
 {
-    m_user = user;
-}
+    m_hostIP = hostIP;
+    m_port = port;
+    m_hostName = hostName;
+    QString conString = connectionString();
 
-void Connection::openDB()
-{
-    m_db.setUserName(m_user.userName());
-    m_db.setPassword(m_user.userPass());
-    m_db.open();
+    m_db.setHostName(conString);
+    m_db.setDatabaseName(databaseName);
+    m_db.setUserName(userName);
+    m_db.setPassword(password);
+    m_db.setPort(port);
+
+//    m_db.setHostName("192.168.1.243:1521/TEST");
+//    m_db.setDatabaseName("Flowair test");
+//    m_db.setUserName("GMICKOWSKI");
+//    m_db.setPassword("GMi2016!");
+//    m_db.setPort(1521);
+
+//    qDebug() << m_db.hostName() << m_db.databaseName() << m_db.userName() << m_db.password() << m_db.port();
+    return m_db.open();
 }

@@ -3,7 +3,6 @@
 
 #include <QtCore>
 #include <QtSql>
-#include "user.h"
 
 
 class Connection
@@ -12,21 +11,26 @@ public:
     // Static access method
     static Connection* getConnection();
 
-    User getUser() const;
-    User* getUser();
-    void setUser(const User &user);
-
-    void openDB();
-    void closeDB();
+    QSqlDatabase* db();
+    bool login(QString hostIP, int port, QString hostName, QString databaseName, QString userName, QString password);
 
 private:
     // Private constructor
     Connection();
     // Instance stored
     static Connection* instance;
+    
+    QString connectionString();
+
 
     QSqlDatabase m_db;
-    User m_user;
+    QString m_hostIP;
+    int m_port;
+    QString m_hostName;
+    QString m_databaseName;
+    QString m_userName;
+    QString m_password;
+    
 };
 
 #endif // CONNECTION_H

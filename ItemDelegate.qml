@@ -12,12 +12,16 @@ Item {
         anchors.fill: parent
         spacing: 4;
         Text {
+            text: INDEKS_CZESCI
+            width: 80
+        }
+        Text {
             text: NUMER_KATALOGOWY
             width: 150
         }
         Text {
             text: INDEKS
-            width: 300;
+            width: 300
         }
 
     }

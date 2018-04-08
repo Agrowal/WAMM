@@ -13,11 +13,12 @@ void SqlQueryModel::setQuery(const QString &query, const QSqlDatabase &db)
     generateRoleNames();
 }
 
-void SqlQueryModel::setQuery(const QSqlQuery & query)
+void SqlQueryModel::setQuery(const QString &query, const QSqlDatabase *db)
 {
-    QSqlQueryModel::setQuery(query);
+    QSqlQueryModel::setQuery(query, *db);
     generateRoleNames();
 }
+
 
 void SqlQueryModel::generateRoleNames()
 {

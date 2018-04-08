@@ -4,6 +4,9 @@
 #include "connection.h"
 #include "sqlquerymodel.h"
 #include "enginecontrol.h"
+#include "gateways\indeksygateway.h"
+#include "Gateways/wersjewyrobugateway.h"
+#include "Gateways/mrpstrukturygateway.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,18 +15,24 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
     EngineControl* engineControl = new EngineControl(&engine);
     engine.rootContext()->setContextProperty("myEngineControl", engineControl);
 
+    qDebug() << "IS DB OPEN: " << engineControl->login("TEST","Flowair test","GMICKOWSKI","GMi2016!");
 
-    Connection* db = Connection::getConnection();
+    IndeksyGateway *indeksyBrama = new IndeksyGateway();
+    indeksyBrama->select();
+    engine.rootContext()->setContextProperty("indeksyBrama",indeksyBrama);
 
-    SqlQueryModel *model = new SqlQueryModel(0);
-    model->setQuery("select i.NUMER_KATALOGOWY, i.INDEKS from INDEKSY i where rownum <= 20");
-    engine.rootContext()->setContextProperty("myModel", model);
+    WersjeWyrobuGateway *wersjeWyrobuBrama = new WersjeWyrobuGateway;
+    wersjeWyrobuBrama->select();
+    engine.rootContext()->setContextProperty("wersjeWyrobuBrama",wersjeWyrobuBrama);
 
+    mrpStrukturyGateway *mrpStrukturyBrama = new mrpStrukturyGateway;
+    engine.rootContext()->setContextProperty("mrpStrukturyBrama",mrpStrukturyBrama);
 
-    engine.load(QUrl(QStringLiteral("qrc:/LoginDialog.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/LoginDialog/LoginDialog.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
 

@@ -6,4 +6,4 @@ Window {
     visible: true
     height: 400
     width: 400
-}
+    }

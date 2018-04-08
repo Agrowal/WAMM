@@ -4,7 +4,8 @@
         <file>ItemDelegate.qml</file>
         <file>images/login_avatar.jpg</file>
         <file>MainWindow.qml</file>
-        <file>LoginDialog.qml</file>
+        <file>LoginDialog/LoginDialog.qml</file>
+        <file>LoginDialog/MyInputField.qml</file>
     </qresource>
     <qresource prefix="/images"/>
 </RCC>
